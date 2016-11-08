@@ -14,12 +14,15 @@ import com.library.lending.ObjectStatus;
 import com.library.object.ObjectInformation;
 
 import de.dhbw.stuttgart.swe2.javadsl.ToMany;
+import de.dhbw.stuttgart.swe2.javadsl.ToOne;
 
 
 public class DslTest {
 
 	private static final ToMany<ObjectInformation, LendingObject> OBJECT_INFORMATION_TO_LENDING_OBJECT = new ObjectInformationToLendingObject();
 	private static final ToMany<LendingObject, LendingInformation> LENDING_OBJECT_TO_LENDING_INFORMATION = new LendingObjectToLendingInformation();
+//	private static final ToOne<LendingInformation, LendingObject> LENDING_INFORMATION_TO_LENDING_OBJECT = new LendingInformationToLendingObject();
+//	private static final ToOne<LendingObject, ObjectInformation> LENDING_OBJECT_TO_OBJECT_INFORMATION = new LendingObjectToObjectInformation();
 
 	private static class ObjectInformationToLendingObject implements ToMany<ObjectInformation, LendingObject>{
 
@@ -61,10 +64,43 @@ public class DslTest {
 		input.setLendingObjects(lendingObjectList);
 		List<LendingInformation> lendingInfos = from(ObjectInformation.class).join(lendingObjects()).join(lendingInformations()).get(input);
 		Assert.assertEquals(1, lendingInfos.size());
-		Assert.assertEquals(ObjectStatus.NEW, lendingInfos.get(0).getStatus());
+		Assert.assertEquals(ObjectStatus.NEW, lendingInfos.get(0).getStatus());		
 	}
 	
-	ObjectInformation input = new ObjectInformation(){
-		
+	ObjectInformation input = new ObjectInformation() {
 	};
+	
+	
+//	@Test
+//	public void testOne() throws Exception {
+//		LendingInformation lendingInfo = from(ObjectInformation.class).join(lendingObject()).join(objectInformation()).getOne(input);
+//		Assert.assertEquals(1, lendingInfo.getId());
+//	}
+//	
+//	private static ToOne<LendingInformation, LendingObject> lendingObject() {
+//		return LENDING_INFORMATION_TO_LENDING_OBJECT;
+//	}
+//	
+//	private static class LendingInformationToLendingObject extends AbstractToOne<LendingInformation, LendingObject> {
+//
+//		@Override
+//		public LendingObject getOne(LendingInformation input) {
+//			// TODO Auto-generated method stub
+//			return input.getLendingObjects();
+//		}
+//	}
+//	private static ToOne<LendingObject, ObjectInformation> objectInformation() {
+//		return LENDING_OBJECT_TO_OBJECT_INFORMATION;
+//	}
+//	
+//	private static class LendingObjectToObjectInformation extends AbstractToOne<LendingObject, ObjectInformation> {
+//
+//		@Override
+//		public ObjectInformation getOne(LendingObject input) {
+//			// TODO Auto-generated method stub
+//			return input.getObject();
+//		}
+//
+//		
+//	}
 }

@@ -31,7 +31,7 @@ public class LendingObject {
 	@JoinColumn(name="OBJECT_INFORMATION_ID")
 	private ObjectInformation object;
 	
-	@OneToMany(mappedBy="lendingObjects")
+	@OneToMany(mappedBy="lendingObjects", fetch=FetchType.LAZY)
 	private List<LendingInformation> lendingInfo;
 	
 	@Id
