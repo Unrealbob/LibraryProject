@@ -1,5 +1,6 @@
 package com.library.people;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -29,7 +30,7 @@ public class Employee extends Human {
 	private Library library;
 	
 	@OneToMany(mappedBy="employee")
-	List<LendingInformation> lendingInfos;
+	List<LendingInformation> lendingInfos = new ArrayList<LendingInformation>();
 	
 	public long getSalary() {
 		return salary;

@@ -1,5 +1,6 @@
 package com.library.object;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -23,7 +24,7 @@ import com.library.people.Publisher;
 public abstract class ObjectInformation {
 	
 	@OneToMany(mappedBy="object", fetch=FetchType.LAZY)
-	private List<LendingObject> lendingObjects;
+	private List<LendingObject> lendingObjects = new ArrayList<LendingObject>();
 	
 	@ManyToMany
 	@JoinTable(

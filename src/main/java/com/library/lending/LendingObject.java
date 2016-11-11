@@ -1,5 +1,6 @@
 package com.library.lending;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -33,7 +34,7 @@ public class LendingObject {
 	private ObjectInformation object;
 	
 	@OneToMany(mappedBy="lendingObjects", fetch=FetchType.LAZY)
-	private List<LendingInformation> lendingInfo;
+	private List<LendingInformation> lendingInfo = new ArrayList<>();
 	
 	@Id
 	@Column(name="LENDING_OBJECT_ID")

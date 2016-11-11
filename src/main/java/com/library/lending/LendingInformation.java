@@ -24,7 +24,7 @@ public class LendingInformation {
 	
 	@ManyToOne(fetch=FetchType.LAZY, cascade={CascadeType.REFRESH, CascadeType.MERGE})
 	@JoinColumn(name="LENDING_OBJECTS_ID")
-	private LendingObject lendingObjects;
+	private LendingObject lendingObject;
 	
 	@ManyToOne(fetch=FetchType.LAZY, cascade={CascadeType.REFRESH, CascadeType.MERGE})
 	@JoinColumn(name="CUSTOMER_ID")
@@ -50,12 +50,12 @@ public class LendingInformation {
 	@Column(name="status")
 	private ObjectStatus status;
 
-	public LendingObject getLendingObjects() {
-		return lendingObjects;
+	public LendingObject getLendingObject() {
+		return lendingObject;
 	}
 
 	public void setLendingObjects(LendingObject lendingObjects) {
-		this.lendingObjects = lendingObjects;
+		this.lendingObject = lendingObjects;
 	}
 
 	public Customer getCustomer() {

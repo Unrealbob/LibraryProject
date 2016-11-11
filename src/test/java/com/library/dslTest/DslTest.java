@@ -2,13 +2,10 @@ package com.library.dslTest;
 
 import static de.dhbw.stuttgart.swe2.javadsl.FromServiceImpl.from;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.derby.client.am.DateTime;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -23,8 +20,8 @@ import com.library.people.Employee;
 import de.dhbw.stuttgart.swe2.javadsl.AbstractToOne;
 import de.dhbw.stuttgart.swe2.javadsl.Filter;
 import de.dhbw.stuttgart.swe2.javadsl.FromService;
-import de.dhbw.stuttgart.swe2.javadsl.ManyService;
 import de.dhbw.stuttgart.swe2.javadsl.ToMany;
+import de.dhbw.stuttgart.swe2.javadsl.ToOne;
 
 
 public class DslTest {
@@ -119,7 +116,7 @@ public class DslTest {
 		@Override
 		public LendingObject getOne(LendingInformation input) {
 			// TODO Auto-generated method stub
-			return input.getLendingObjects();
+			return input.getLendingObject();
 		}
 	}
 
@@ -167,14 +164,12 @@ public class DslTest {
 	public void testObjectInformationToManyLendingInformations() throws Exception {
 		ObjectInformation input = new ObjectInformation() {
 		};
+
+		LendingObject lendingObjectList = new LendingObject(input);
+		input.getLendingObjects().add(lendingObjectList);
 		LendingInformation info = new LendingInformation();
 		info.setStatus(ObjectStatus.NEW);
-		ArrayList<LendingInformation> lendingInfoList = new ArrayList<LendingInformation>();
-		lendingInfoList.add(info);
-		ArrayList<LendingObject> lendingObjectList = new ArrayList<LendingObject>();
-		lendingObjectList.add(new LendingObject(new Book()));
-		lendingObjectList.get(0).setLendingInfo(lendingInfoList);
-		input.setLendingObjects(lendingObjectList);
+		lendingObjectList.getLendingInfo().add(info);
 		
 		
 		List<LendingInformation> lendingInfos = from(ObjectInformation.class).join(lendingObjects()).join(lendingInformations()).get(input);
@@ -185,7 +180,7 @@ public class DslTest {
 	@Test
 	public void testFilterOnFirstName(){
 		
-		List<Library> library = new ArrayList<Library>();
+		Library library = new Library();
 		Employee hans = new Employee();
 		hans.setFirstName("Hans");
 		hans.setSecondName("Zimmer");
@@ -225,17 +220,17 @@ public class DslTest {
 	@Test
 	public void testLendingInformationToOneObject() throws Exception {
 		LendingInformation inputLending = new LendingInformation();
-		
-		ObjectInformation obj = new ObjectInformation() {
+		ObjectInformation objInfo = new ObjectInformation() {
 		};
-		
-		obj.setName("Illuminati");
+		LendingObject lendingObject = new LendingObject(objInfo);
+		inputLending.setLendingObjects(lendingObject);
+		inputLending.getLendingObject().getObject().setName("Illumniati");
 		
 	
 		FromService<LendingInformation> from = from(LendingInformation.class);
 		ObjectInformation objectInfo = from.join(lendingObject()).join(objectInformation()).getOne(inputLending);
 		System.out.println(objectInfo.getName());
-		Assert.assertEquals(obj.getName(), objectInfo.getName());
+		Assert.assertEquals("Illumniati", objectInfo.getName());
 	}
 	
 	
