@@ -32,7 +32,7 @@ public class LendingInformation {
 	
 	@ManyToOne(fetch=FetchType.LAZY, cascade={CascadeType.REFRESH, CascadeType.MERGE})
 	@JoinColumn(name="EMPLOYEE_ID")
-	private Employee controllingEmployee;
+	private Employee employee;
 	
 
 	@Column(name="LENDING_DATE")
@@ -66,13 +66,12 @@ public class LendingInformation {
 		this.customer = customer;
 	}
 
-
-	public Employee getControllingEmployee() {
-		return controllingEmployee;
+	public Employee getEmployee() {
+		return employee;
 	}
 
-	public void setControllingEmployee(Employee controllingEmployee) {
-		this.controllingEmployee = controllingEmployee;
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
 	}
 
 	public Date getLendingDate() {

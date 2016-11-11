@@ -274,14 +274,11 @@ public class LibraryTest {
 			transaction.begin();
 
 			try{
-
-				entityManager.persist(lib);
-				System.out.println("persist lib");
-				entityManager.persist(book);
-				System.out.println("persist book");
 				entityManager.persist(lendingBook);
-				System.out.println("persist lendingBook");
-				
+				entityManager.persist(book);
+				entityManager.persist(lib);
+				transaction.commit();
+				transaction.begin();
 				Book testBook = entityManager.find(Book.class, book.getId());
 				assertEquals(book, testBook);
 				LendingObject testInformation = entityManager.find(LendingObject.class, lendingBook.getId());
@@ -289,11 +286,13 @@ public class LibraryTest {
 				
 				entityManager.remove(lib);
 				transaction.commit();
-
+				//Book informations should not be deleted
 				Book testBook2 = entityManager.find(Book.class, book.getId());
-				assertEquals(null, testBook2);
-				LendingObject testInformation2 = entityManager.find(LendingObject.class, lendingBook.getId());
-				assertEquals(lendingBook, testInformation2);
+				assertEquals(book, testBook2);
+				
+				//All physical objects should be deleted if a library gets deleted
+				LendingObject lendingBook2 = entityManager.find(LendingObject.class, lendingBook.getId());
+				assertEquals(null, lendingBook2);
 				
 			} finally{
 				if(transaction.isActive()) transaction.rollback();

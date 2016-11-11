@@ -6,6 +6,7 @@ package com.library;
  * @author unrea, @date 28.10.16 14:46
  */
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -25,16 +26,16 @@ import com.library.people.Employee;
 @Entity(name="LIBRARY")
 public class Library {
 	
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(
 			name="LIBRARY_LENDINGOBJECTS",
 			joinColumns=@JoinColumn(name="LIBRARY_ID", referencedColumnName="LIBRARY_ID"),
 			inverseJoinColumns=@JoinColumn(name="LENDING_OBJECT_ID", referencedColumnName="LENDING_OBJECT_ID"))
-	List<LendingObject> lendingObjects;
+	List<LendingObject> lendingObjects = new ArrayList<>();
 	
 	@OneToMany(targetEntity= Employee.class, cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name="EMPLOYEE_ID")
-	List<Employee> employees;
+	List<Employee> employees = new ArrayList<>();
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
