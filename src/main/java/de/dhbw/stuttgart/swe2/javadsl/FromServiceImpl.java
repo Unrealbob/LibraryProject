@@ -29,5 +29,7 @@ public class FromServiceImpl<T> implements FromService<T> {
 	public <NextOutput> OneService<T, NextOutput> join(OneService<T, NextOutput> toOne) {
 		return new SimpleOneServiceImpl<T, NextOutput>(toOne);
 	}
+	
+
 
 }

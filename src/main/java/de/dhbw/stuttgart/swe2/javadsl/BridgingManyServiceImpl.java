@@ -38,4 +38,10 @@ public class BridgingManyServiceImpl<Input, Bridged, Output> implements ManyServ
 		return output;
 	}
 
+	@Override
+	public ManyService<Input, Output> filter(Filter<Output> filter) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
