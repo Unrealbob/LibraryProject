@@ -12,6 +12,7 @@ import javax.persistence.Persistence;
 
 import org.junit.Test;
 
+import com.library.Library;
 import com.library.Pass;
 import com.library.lending.LendingInformation;
 import com.library.lending.LendingObject;
@@ -191,8 +192,7 @@ public class LibraryTest {
 		
 		LendingInformation lendingInfo = new LendingInformation();
 		lendingInfo.setCustomer(customer);
-		LendingObject lendingObj = new LendingObject();
-		lendingObj.setObject(book);
+		LendingObject lendingObj = new LendingObject(book);
 		lendingInfo.setLendingObjects(lendingObj);
 		
 		List<LendingInformation> lendingInfoList = new ArrayList<>();
@@ -260,5 +260,48 @@ public class LibraryTest {
 		}		
 	}
 	
-	
+	@Test
+	public void testDeleteLibrary(){
+		Library lib = new Library();
+		Book book = new Book();
+		LendingObject lendingBook = new LendingObject(book);
+		lib.getLendingObjects().add(lendingBook);
+		
+		EntityManager entityManager = factory.createEntityManager();
+		
+		try{
+			EntityTransaction transaction = entityManager.getTransaction();
+			transaction.begin();
+
+			try{
+
+				entityManager.persist(lib);
+				System.out.println("persist lib");
+				entityManager.persist(book);
+				System.out.println("persist book");
+				entityManager.persist(lendingBook);
+				System.out.println("persist lendingBook");
+				
+				Book testBook = entityManager.find(Book.class, book.getId());
+				assertEquals(book, testBook);
+				LendingObject testInformation = entityManager.find(LendingObject.class, lendingBook.getId());
+				assertEquals(lendingBook, testInformation);
+				
+				entityManager.remove(lib);
+				transaction.commit();
+
+				Book testBook2 = entityManager.find(Book.class, book.getId());
+				assertEquals(null, testBook2);
+				LendingObject testInformation2 = entityManager.find(LendingObject.class, lendingBook.getId());
+				assertEquals(lendingBook, testInformation2);
+				
+			} finally{
+				if(transaction.isActive()) transaction.rollback();
+			}		
+				
+		} finally{
+			entityManager.close();
+		}	
+		
+	}
 }

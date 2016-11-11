@@ -8,6 +8,7 @@ package com.library;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,7 +32,7 @@ public class Library {
 			inverseJoinColumns=@JoinColumn(name="LENDING_OBJECT_ID", referencedColumnName="LENDING_OBJECT_ID"))
 	List<LendingObject> lendingObjects;
 	
-	@OneToMany(targetEntity= Employee.class)
+	@OneToMany(targetEntity= Employee.class, cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name="EMPLOYEE_ID")
 	List<Employee> employees;
 	

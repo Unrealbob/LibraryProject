@@ -2,6 +2,7 @@ package com.library.lending;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -21,17 +22,17 @@ public class LendingInformation {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY, cascade={CascadeType.REFRESH, CascadeType.MERGE})
 	@JoinColumn(name="LENDING_OBJECTS_ID")
 	private LendingObject lendingObjects;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY, cascade={CascadeType.REFRESH, CascadeType.MERGE})
 	@JoinColumn(name="CUSTOMER_ID")
 	private Customer customer;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY, cascade={CascadeType.REFRESH, CascadeType.MERGE})
 	@JoinColumn(name="EMPLOYEE_ID")
-	private Employee employee;
+	private Employee controllingEmployee;
 	
 
 	@Column(name="LENDING_DATE")
@@ -65,12 +66,13 @@ public class LendingInformation {
 		this.customer = customer;
 	}
 
-	public Employee getEmployee() {
-		return employee;
+
+	public Employee getControllingEmployee() {
+		return controllingEmployee;
 	}
 
-	public void setEmployee(Employee employee) {
-		this.employee = employee;
+	public void setControllingEmployee(Employee controllingEmployee) {
+		this.controllingEmployee = controllingEmployee;
 	}
 
 	public Date getLendingDate() {

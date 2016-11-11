@@ -38,6 +38,10 @@ public class LendingObject {
 	@Column(name="LENDING_OBJECT_ID")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
+	
+	public LendingObject(ObjectInformation objectInformation) {
+		this.object = objectInformation;
+	}
 
 	public long getId() {
 		return id;

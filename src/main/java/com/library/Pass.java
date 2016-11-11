@@ -2,6 +2,7 @@ package com.library;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -23,7 +24,7 @@ public class Pass {
 	@Column(name="VALIDITYDATE")
 	private Date validDate;
 	
-	@OneToOne(fetch=FetchType.LAZY)
+	@OneToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name="CUSTOMER_ID")
 	private Customer customer;
 	

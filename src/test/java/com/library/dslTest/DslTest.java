@@ -11,10 +11,10 @@ import org.junit.Test;
 import com.library.lending.LendingInformation;
 import com.library.lending.LendingObject;
 import com.library.lending.ObjectStatus;
+import com.library.object.Book;
 import com.library.object.ObjectInformation;
 
 import de.dhbw.stuttgart.swe2.javadsl.ToMany;
-import de.dhbw.stuttgart.swe2.javadsl.ToOne;
 
 
 public class DslTest {
@@ -59,7 +59,7 @@ public class DslTest {
 		ArrayList<LendingInformation> lendingInfoList = new ArrayList<LendingInformation>();
 		lendingInfoList.add(info);
 		ArrayList<LendingObject> lendingObjectList = new ArrayList<LendingObject>();
-		lendingObjectList.add(new LendingObject());
+		lendingObjectList.add(new LendingObject(new Book()));
 		lendingObjectList.get(0).setLendingInfo(lendingInfoList);
 		input.setLendingObjects(lendingObjectList);
 		List<LendingInformation> lendingInfos = from(ObjectInformation.class).join(lendingObjects()).join(lendingInformations()).get(input);
