@@ -26,6 +26,7 @@ import com.library.object.Title;
 import com.library.people.Artist;
 import com.library.people.Customer;
 import com.library.people.CustomerStatus;
+import com.library.people.Employee;
 import com.library.people.Sexuality;
 
 /*
@@ -262,6 +263,57 @@ public class LibraryTest {
 	
 	@Test
 	public void testDeleteLibrary(){
+		
+		Library lib = new Library();
+		Book book = new Book();
+		LendingObject lendingBook = new LendingObject(book);
+		lib.getLendingObjects().add(lendingBook);
+		
+		EntityManager entityManager = factory.createEntityManager();
+		
+		try{
+			EntityTransaction transaction = entityManager.getTransaction();
+			transaction.begin();
+
+			try{
+				entityManager.persist(lendingBook);
+				entityManager.persist(book);
+				
+				entityManager.persist(lib);
+				transaction.commit();
+				transaction.begin();
+				Book testBook = entityManager.find(Book.class, book.getId());
+				assertEquals(book, testBook);
+				LendingObject testInformation = entityManager.find(LendingObject.class, lendingBook.getId());
+				assertEquals(lendingBook, testInformation);
+				
+				entityManager.remove(lib);
+				transaction.commit();
+				//Book informations should not be deleted
+				Book testBook2 = entityManager.find(Book.class, book.getId());
+				assertEquals(book, testBook2);
+				
+				//All physical objects should be deleted if a library gets deleted
+				LendingObject lendingBook2 = entityManager.find(LendingObject.class, lendingBook.getId());
+				assertEquals(null, lendingBook2);
+				
+				
+				
+			} finally{
+				if(transaction.isActive()) transaction.rollback();
+			}		
+				
+		} finally{
+			entityManager.close();
+		}	
+		
+	}
+	
+	
+	
+	
+	@Test
+	public void testDeleteBookWithoutDeletingLibrary(){
 		Library lib = new Library();
 		Book book = new Book();
 		LendingObject lendingBook = new LendingObject(book);
@@ -284,15 +336,193 @@ public class LibraryTest {
 				LendingObject testInformation = entityManager.find(LendingObject.class, lendingBook.getId());
 				assertEquals(lendingBook, testInformation);
 				
-				entityManager.remove(lib);
+				entityManager.remove(book);
 				transaction.commit();
-				//Book informations should not be deleted
-				Book testBook2 = entityManager.find(Book.class, book.getId());
-				assertEquals(book, testBook2);
+				//Library informations should not be deleted
+				Library testLibrary = entityManager.find(Library.class, lib.getId());
+				assertEquals(lib, testLibrary);
 				
 				//All physical objects should be deleted if a library gets deleted
 				LendingObject lendingBook2 = entityManager.find(LendingObject.class, lendingBook.getId());
 				assertEquals(null, lendingBook2);
+				
+			} finally{
+				if(transaction.isActive()) transaction.rollback();
+			}		
+				
+		} finally{
+			entityManager.close();
+		}	
+		
+	}
+	
+	
+	@Test
+	public void testDeleteCustomer(){
+		Pass pass = new Pass();
+		Customer cust = new Customer();
+		pass.setCustomer(cust);
+		cust.setPass(pass);
+		LendingInformation info = new LendingInformation();
+		info.setCustomer(cust);
+		
+		EntityManager entityManager = factory.createEntityManager();
+		
+		try{
+			EntityTransaction transaction = entityManager.getTransaction();
+			transaction.begin();
+
+			try{
+				entityManager.persist(cust);
+				entityManager.persist(info);
+				
+				transaction.commit();
+				transaction.begin();
+				Customer testCust = entityManager.find(Customer.class, cust.getId());
+				assertEquals(cust, testCust);
+				
+				LendingInformation testInformation = entityManager.find(LendingInformation.class, info.getId());
+				assertEquals(info, testInformation);
+				
+				entityManager.remove(cust);
+				transaction.commit();
+				//Lending informations should not be deleted
+				LendingInformation testInfo = entityManager.find(LendingInformation.class, info.getId());
+				assertEquals(info, testInfo);
+				
+				//All physical objects should be deleted if a library gets deleted
+				Customer testCust2 = entityManager.find(Customer.class, cust.getId());
+				assertEquals(null, testCust2);
+				
+			} finally{
+				if(transaction.isActive()) transaction.rollback();
+			}		
+				
+		} finally{
+			entityManager.close();
+		}	
+		
+	}
+	
+	@Test
+	public void testDeleteEmployee(){
+		Employee emp = new Employee();
+		emp.setFirstName("TestEmployee");
+		Library lib = new Library();
+		lib.getEmployees().add(emp);
+		emp.setLibrary(lib);
+		EntityManager entityManager = factory.createEntityManager();
+		
+		try{
+			EntityTransaction transaction = entityManager.getTransaction();
+			transaction.begin();
+
+			try{
+				entityManager.persist(lib);
+				entityManager.persist(emp);
+				
+				
+				transaction.commit();
+				transaction.begin();
+				Employee testEmp = entityManager.find(Employee.class, emp.getId());
+				assertEquals(emp, testEmp);
+				
+				Library testLibrary = entityManager.find(Library.class, lib.getId());
+				assertEquals(lib, testLibrary);
+				
+				entityManager.remove(emp);
+				transaction.commit();
+				//Library should not be deleted
+				Library testLib2 = entityManager.find(Library.class, lib.getId());
+				assertEquals(lib, testLib2);
+				
+				//Employee should be deleted
+				Employee testEmp2 = entityManager.find(Employee.class, emp.getId());
+				assertEquals(null, testEmp2);
+				
+			} finally{
+				if(transaction.isActive()) transaction.rollback();
+			}		
+				
+		} finally{
+			entityManager.close();
+		}	
+		
+	}
+	
+	@Test
+	public void testDeleteLendingInformation(){
+		Employee emp = new Employee();
+		Customer cust = new Customer();
+		Pass pass = new Pass();
+		cust.setPass(pass);
+		pass.setCustomer(cust);
+		Book book = new Book();
+		LendingObject lenobj = new LendingObject(book);
+		LendingInformation leninfo = new LendingInformation();
+		leninfo.setCustomer(cust);
+		leninfo.setEmployee(emp);
+		leninfo.setLendingObjects(lenobj);
+		
+		
+		EntityManager entityManager = factory.createEntityManager();
+		
+		try{
+			EntityTransaction transaction = entityManager.getTransaction();
+			transaction.begin();
+
+			try{
+				entityManager.persist(book);
+				entityManager.persist(pass);
+				entityManager.persist(cust);
+				entityManager.persist(emp);
+				entityManager.persist(lenobj);
+				entityManager.persist(leninfo);
+				
+				transaction.commit();
+				transaction.begin();
+				
+				Employee testEmp = entityManager.find(Employee.class, emp.getId());
+				assertEquals(emp, testEmp);
+				
+				Book testBook = entityManager.find(Book.class, book.getId());
+				assertEquals(book, testBook);
+				
+				Pass testPass = entityManager.find(Pass.class, pass.getId());
+				assertEquals(pass, testPass);
+				
+				Customer testCust = entityManager.find(Customer.class, cust.getId());
+				assertEquals(cust, testCust);
+				
+				LendingObject testLenobj = entityManager.find(LendingObject.class, lenobj.getId());
+				assertEquals(lenobj, testLenobj);
+				
+				LendingInformation testInformation = entityManager.find(LendingInformation.class, leninfo.getId());
+				assertEquals(leninfo, testInformation);
+				
+				
+				
+				entityManager.remove(leninfo);
+				transaction.commit();
+					
+				//Nothing except LendingInformation should be deleted
+				Employee testEmp2 = entityManager.find(Employee.class, emp.getId());
+				assertEquals(emp, testEmp2);
+				
+				Book testBook2 = entityManager.find(Book.class, book.getId());
+				assertEquals(book, testBook2);
+				
+				Pass testPass2 = entityManager.find(Pass.class, pass.getId());
+				assertEquals(pass, testPass2);
+				
+				Customer testCust2 = entityManager.find(Customer.class, cust.getId());
+				assertEquals(cust, testCust2);
+				
+				LendingObject testLenobj2 = entityManager.find(LendingObject.class, lenobj.getId());
+				assertEquals(lenobj, testLenobj2);
+				
+				LendingInformation testInformation2 = entityManager.find(LendingInformation.class, leninfo.getId());
+				assertEquals(null, testInformation2);
 				
 			} finally{
 				if(transaction.isActive()) transaction.rollback();
