@@ -33,7 +33,7 @@ public class LendingObject {
 	@JoinColumn(name="OBJECT_INFORMATION_ID")
 	private ObjectInformation object;
 	
-	@OneToMany(mappedBy="lendingObjects", fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="lendingObject", fetch=FetchType.LAZY)
 	private List<LendingInformation> lendingInfo = new ArrayList<>();
 	
 	@Id
