@@ -1,5 +1,6 @@
 package com.library.people;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -21,7 +22,7 @@ public class Artist {
 			name="TITLES_ARTIST",
 			joinColumns=@JoinColumn(name="ARTIST_ID", referencedColumnName="ARTIST_ID"),
 			inverseJoinColumns=@JoinColumn(name="TITLE_ID", referencedColumnName="TITLE_ID"))
-	private List<Title> titles;
+	private List<Title> titles = new ArrayList<>();
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

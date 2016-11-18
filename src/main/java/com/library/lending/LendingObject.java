@@ -27,7 +27,7 @@ public class LendingObject {
 			name="LIBRARY_LENDINGOBJECTS",
 			joinColumns=@JoinColumn(name="LENDING_OBJECT_ID", referencedColumnName="LENDING_OBJECT_ID"),
 			inverseJoinColumns=@JoinColumn(name="LIBRARY_ID", referencedColumnName="LIBRARY_ID"))
-	List<Library> librarys;
+	List<Library> librarys = new ArrayList<>();
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="OBJECT_INFORMATION_ID")

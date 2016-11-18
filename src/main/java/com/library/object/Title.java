@@ -1,5 +1,6 @@
 package com.library.object;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -32,14 +33,14 @@ public class Title {
 			name="CD_TITLES",
 			joinColumns=@JoinColumn(name="TITLE_ID", referencedColumnName="TITLE_ID"),
 			inverseJoinColumns=@JoinColumn(name="OBJECT_INFORMATION_ID", referencedColumnName="OBJECT_INFORMATION_ID"))
-	private List<CD> cds;
+	private List<CD> cds = new ArrayList<>();
 	
 	@ManyToMany
 	@JoinTable(
 			name="TITLES_ARTIST",
 			joinColumns=@JoinColumn(name="TITLE_ID", referencedColumnName="TITLE_ID"),
 			inverseJoinColumns=@JoinColumn(name="ARTIST_ID", referencedColumnName="ARTIST_ID"))
-	private List<Artist> artists;
+	private List<Artist> artists = new ArrayList<>();
 
 	public long getId() {
 		return id;

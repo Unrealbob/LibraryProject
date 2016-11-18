@@ -194,7 +194,7 @@ public class LibraryTest {
 		LendingInformation lendingInfo = new LendingInformation();
 		lendingInfo.setCustomer(customer);
 		LendingObject lendingObj = new LendingObject(book);
-		lendingInfo.setLendingObjects(lendingObj);
+		lendingInfo.setLendingObject(lendingObj);
 		
 		List<LendingInformation> lendingInfoList = new ArrayList<>();
 		lendingInfoList.add(lendingInfo);
@@ -462,7 +462,7 @@ public class LibraryTest {
 		LendingInformation leninfo = new LendingInformation();
 		leninfo.setCustomer(cust);
 		leninfo.setEmployee(emp);
-		leninfo.setLendingObjects(lenobj);
+		leninfo.setLendingObject(lenobj);
 		
 		
 		EntityManager entityManager = factory.createEntityManager();

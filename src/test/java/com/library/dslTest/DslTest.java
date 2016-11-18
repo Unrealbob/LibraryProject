@@ -185,7 +185,7 @@ public class DslTest {
 		hans.setFirstName("Hans");
 		hans.setSecondName("Zimmer");
 		Employee hans2 = new Employee();
-		hans2.setFirstName("Sven");
+		hans2.setFirstName("Klaus");
 		hans2.setSecondName("Mustermann");
 		library.getEmployees().add(hans);
 		library.getEmployees().add(hans2);
@@ -223,7 +223,7 @@ public class DslTest {
 		ObjectInformation objInfo = new ObjectInformation() {
 		};
 		LendingObject lendingObject = new LendingObject(objInfo);
-		inputLending.setLendingObjects(lendingObject);
+		inputLending.setLendingObject(lendingObject);
 		inputLending.getLendingObject().getObject().setName("Illumniati");
 		
 	

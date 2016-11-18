@@ -1,5 +1,6 @@
 package com.library.people;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -24,7 +25,7 @@ public class Customer extends Human{
 	private Pass pass;
 	
 	@OneToMany(mappedBy="customer")
-	private List<LendingInformation> lendingInfos;
+	private List<LendingInformation> lendingInfos = new ArrayList<>();
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="EMPLOYEE_ID")

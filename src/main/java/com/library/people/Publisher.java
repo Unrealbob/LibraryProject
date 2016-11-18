@@ -1,5 +1,6 @@
 package com.library.people;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -21,7 +22,7 @@ public class Publisher {
 			name="OBJECTINFO_PUBLISHER",
 			joinColumns=@JoinColumn(name="PUBLISHER_ID", referencedColumnName="PUBLISHER_ID"),
 			inverseJoinColumns=@JoinColumn(name="OBJECT_INFORMATION_ID", referencedColumnName="OBJECT_INFORMATION_ID"))
-	private List<ObjectInformation> objectInfos;
+	private List<ObjectInformation> objectInfos = new ArrayList<>();
 	
 	@Id
 	@Column(name="PUBLISHER_ID")

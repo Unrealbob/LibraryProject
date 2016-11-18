@@ -1,5 +1,6 @@
 package com.library.object;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -19,7 +20,7 @@ public class CD extends Media{
 			name="CD_TITLES",
 			joinColumns=@JoinColumn(name="OBJECT_INFORMATION_ID", referencedColumnName="OBJECT_INFORMATION_ID"),
 			inverseJoinColumns=@JoinColumn(name="TITLE_ID", referencedColumnName="TITLE_ID"))
-	private List<Title> cdTitles;
+	private List<Title> cdTitles = new ArrayList<Title>();
 	
 	
 

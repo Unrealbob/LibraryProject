@@ -31,7 +31,7 @@ public abstract class ObjectInformation {
 			name="OBJECTINFO_PUBLISHER",
 			joinColumns=@JoinColumn(name="OBJECT_INFORMATION_ID", referencedColumnName="OBJECT_INFORMATION_ID"),
 			inverseJoinColumns=@JoinColumn(name="PUBLISHER_ID", referencedColumnName="PUBLISHER_ID"))
-	private List<Publisher> publishers;
+	private List<Publisher> publishers = new ArrayList<>();
 	
 	@Id
 	@Column(name="OBJECT_INFORMATION_ID")

@@ -54,8 +54,8 @@ public class LendingInformation {
 		return lendingObject;
 	}
 
-	public void setLendingObjects(LendingObject lendingObjects) {
-		this.lendingObject = lendingObjects;
+	public void setLendingObject(LendingObject lendingObject) {
+		this.lendingObject = lendingObject;
 	}
 
 	public Customer getCustomer() {
