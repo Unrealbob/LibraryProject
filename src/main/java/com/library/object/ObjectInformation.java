@@ -27,7 +27,7 @@ public abstract class ObjectInformation {
 	@OneToMany(mappedBy="object", fetch=FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<LendingObject> lendingObjects = new ArrayList<LendingObject>();
 	
-	@ManyToMany
+	@ManyToMany(targetEntity = Publisher.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(
 			name="OBJECTINFO_PUBLISHER",
 			joinColumns=@JoinColumn(name="OBJECT_INFORMATION_ID", referencedColumnName="OBJECT_INFORMATION_ID"),
@@ -60,8 +60,14 @@ public abstract class ObjectInformation {
 		return publishers;
 	}
 
-	public void setPublishers(List<Publisher> publishers) {
-		this.publishers = publishers;
+	public void addPublisher(Publisher publisher) {
+		this.publishers.add(publisher);
+		publisher.getObjectInfos().add(this);
+	}
+
+	public void removePublisher(Publisher publisher) {
+		publisher.getObjectInfos().remove(this);
+		this.publishers.remove(publisher);
 	}
 
 	public long getId() {

@@ -3,6 +3,7 @@ package com.library.object;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,14 +29,14 @@ public class Title {
 	@Column(name="DURATION")
 	private int duration;
 	
-	@ManyToMany(targetEntity = CD.class)
+	@ManyToMany(targetEntity = CD.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(
 			name="CD_TITLES",
 			joinColumns=@JoinColumn(name="TITLE_ID", referencedColumnName="TITLE_ID"),
 			inverseJoinColumns=@JoinColumn(name="OBJECT_INFORMATION_ID", referencedColumnName="OBJECT_INFORMATION_ID"))
 	private List<CD> cds = new ArrayList<>();
 	
-	@ManyToMany
+	@ManyToMany(targetEntity = Artist.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(
 			name="TITLES_ARTIST",
 			joinColumns=@JoinColumn(name="TITLE_ID", referencedColumnName="TITLE_ID"),
@@ -70,18 +71,17 @@ public class Title {
 		return cds;
 	}
 
-	public void setCds(List<CD> cds) {
-		this.cds = cds;
-	}
-
 	public List<Artist> getArtists() {
 		return artists;
 	}
-
-	public void setArtists(List<Artist> artists) {
-		this.artists = artists;
+	
+	public void addArtist(Artist artist) {
+		this.artists.add(artist);
+		artist.getTitles().add(this);
 	}
 	
-	
-
+	public void removeArtist(Artist artist) {
+		artist.getTitles().remove(this);
+		this.artists.remove(artist);
+	}
 }

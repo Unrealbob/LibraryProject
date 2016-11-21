@@ -3,6 +3,7 @@ package com.library.people;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,12 +13,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import com.library.object.CD;
 import com.library.object.Title;
 
 @Entity(name="ARTIST")
 public class Artist {
 	
-	@ManyToMany
+	@ManyToMany(targetEntity = Title.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(
 			name="TITLES_ARTIST",
 			joinColumns=@JoinColumn(name="ARTIST_ID", referencedColumnName="ARTIST_ID"),
@@ -34,10 +36,6 @@ public class Artist {
 
 	public List<Title> getTitles() {
 		return titles;
-	}
-
-	public void setTitles(List<Title> titles) {
-		this.titles = titles;
 	}
 
 	public long getId() {

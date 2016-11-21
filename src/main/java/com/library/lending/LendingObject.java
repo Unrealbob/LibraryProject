@@ -22,12 +22,9 @@ import com.library.object.ObjectInformation;
 @Entity(name="LENDING_OBJECT")
 public class LendingObject {
 	
-	@ManyToMany
-	@JoinTable(
-			name="LIBRARY_LENDINGOBJECTS",
-			joinColumns=@JoinColumn(name="LENDING_OBJECT_ID", referencedColumnName="LENDING_OBJECT_ID"),
-			inverseJoinColumns=@JoinColumn(name="LIBRARY_ID", referencedColumnName="LIBRARY_ID"))
-	List<Library> librarys = new ArrayList<>();
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "LIBRARY_ID")
+	private Library library;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="OBJECT_INFORMATION_ID")
@@ -53,12 +50,12 @@ public class LendingObject {
 		this.id = id;
 	}
 
-	public List<Library> getLibrarys() {
-		return librarys;
+	public Library getLibrary() {
+		return library;
 	}
 
-	public void setLibrarys(List<Library> librarys) {
-		this.librarys = librarys;
+	public void setLibrary(Library library) {
+		this.library = library;
 	}
 
 	public ObjectInformation getObjectInformation() {

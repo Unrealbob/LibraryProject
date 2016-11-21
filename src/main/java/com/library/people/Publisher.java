@@ -3,6 +3,7 @@ package com.library.people;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,7 +18,7 @@ import com.library.object.ObjectInformation;
 @Entity(name="PUBLISHER")
 public class Publisher {
 	
-	@ManyToMany
+	@ManyToMany(targetEntity = Publisher.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(
 			name="OBJECTINFO_PUBLISHER",
 			joinColumns=@JoinColumn(name="PUBLISHER_ID", referencedColumnName="PUBLISHER_ID"),
@@ -37,10 +38,6 @@ public class Publisher {
 
 	public List<ObjectInformation> getObjectInfos() {
 		return objectInfos;
-	}
-
-	public void setObjectInfos(List<ObjectInformation> objectInfos) {
-		this.objectInfos = objectInfos;
 	}
 
 	public long getId() {

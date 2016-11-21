@@ -26,11 +26,9 @@ import com.library.people.Employee;
 @Entity(name="LIBRARY")
 public class Library {
 	
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(
-			name="LIBRARY_LENDINGOBJECTS",
-			joinColumns=@JoinColumn(name="LIBRARY_ID", referencedColumnName="LIBRARY_ID"),
-			inverseJoinColumns=@JoinColumn(name="LENDING_OBJECT_ID", referencedColumnName="LENDING_OBJECT_ID"))
+	//This was ManyToMany in the model, but one physical book can only be at one physical location
+	@OneToMany(targetEntity = LendingObject.class, cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "LENDING_OBJECT_ID")
 	List<LendingObject> lendingObjects = new ArrayList<>();
 	
 	@OneToMany(targetEntity= Employee.class, cascade = CascadeType.ALL, orphanRemoval = true)
@@ -101,8 +99,15 @@ public class Library {
 	public List<LendingObject> getLendingObjects() {
 		return lendingObjects;
 	}
-	public void setLendingObjects(List<LendingObject> lendingObjects) {
-		this.lendingObjects = lendingObjects;
+	
+	public void addLendingObject(LendingObject lendingObject) {
+		this.lendingObjects.add(lendingObject);
+		lendingObject.setLibrary(this);
+	}
+	
+	public void removeLendingObject(LendingObject lendingObject) {
+		lendingObject.setLibrary(null);
+		this.lendingObjects.remove(lendingObject);
 	}
 	
 	public List<Employee> getEmployees() {
