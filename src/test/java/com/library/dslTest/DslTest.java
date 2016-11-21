@@ -126,7 +126,7 @@ public class DslTest {
 		@Override
 		public ObjectInformation getOne(LendingObject input) {
 			// TODO Auto-generated method stub
-			return input.getObject();
+			return input.getObjectInformation();
 		}
 
 		
@@ -224,7 +224,7 @@ public class DslTest {
 		};
 		LendingObject lendingObject = new LendingObject(objInfo);
 		inputLending.setLendingObject(lendingObject);
-		inputLending.getLendingObject().getObject().setName("Illumniati");
+		inputLending.getLendingObject().getObjectInformation().setName("Illumniati");
 		
 	
 		FromService<LendingInformation> from = from(LendingInformation.class);

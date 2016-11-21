@@ -22,15 +22,17 @@ public class LendingInformation {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
 	
-	@ManyToOne(fetch=FetchType.LAZY, cascade={CascadeType.REFRESH, CascadeType.MERGE})
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="LENDING_OBJECTS_ID")
 	private LendingObject lendingObject;
 	
-	@ManyToOne(fetch=FetchType.LAZY, cascade={CascadeType.REFRESH, CascadeType.MERGE})
+	//TODO: Check if this entry persists if a customer gets deleted - it should just be detached
+	@ManyToOne(fetch=FetchType.LAZY, cascade={ CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
 	@JoinColumn(name="CUSTOMER_ID")
 	private Customer customer;
 	
-	@ManyToOne(fetch=FetchType.LAZY, cascade={CascadeType.REFRESH, CascadeType.MERGE})
+	//TODO: Check if this entry persists if an employee gets deleted - it should just be detached
+	@ManyToOne(fetch=FetchType.LAZY, cascade={ CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
 	@JoinColumn(name="EMPLOYEE_ID")
 	private Employee employee;
 	

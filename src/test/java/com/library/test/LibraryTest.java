@@ -220,7 +220,7 @@ public class LibraryTest {
 			}
 			Customer testCustomer = entityManager.find(Customer.class, customer.getId());
 			Book testBook = entityManager.find(Book.class, book.getId());
-			assertEquals(testCustomer.getLendingInfos().get(0).getLendingObject().getObject().getId(), testBook.getId());
+			assertEquals(testCustomer.getLendingInfos().get(0).getLendingObject().getObjectInformation().getId(), testBook.getId());
 			
 				
 		} finally{

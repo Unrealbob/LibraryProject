@@ -104,13 +104,20 @@ public class Library {
 	public void setLendingObjects(List<LendingObject> lendingObjects) {
 		this.lendingObjects = lendingObjects;
 	}
+	
 	public List<Employee> getEmployees() {
-		return employees;
-	}
-	public void setEmployees(List<Employee> employees) {
-		this.employees = employees;
+		return this.employees;
 	}
 	
+	public void addEmployee(Employee employee) {
+		this.employees.add(employee);
+		employee.setLibrary(this);
+	}
+	
+	public void removeEmployee(Employee employee) {
+		employee.setLibrary(null);
+		this.employees.remove(employee);
+	}
 	
 	
 }

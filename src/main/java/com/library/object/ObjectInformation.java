@@ -3,6 +3,7 @@ package com.library.object;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -23,7 +24,7 @@ import com.library.people.Publisher;
 @Inheritance(strategy=InheritanceType.JOINED)
 public abstract class ObjectInformation {
 	
-	@OneToMany(mappedBy="object", fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="object", fetch=FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<LendingObject> lendingObjects = new ArrayList<LendingObject>();
 	
 	@ManyToMany
@@ -40,13 +41,19 @@ public abstract class ObjectInformation {
 	
 	@Column(name="OBJECT_INFORMATION_NAME")
 	private String name;
-
+	
 	public List<LendingObject> getLendingObjects() {
-		return lendingObjects;
+		return this.lendingObjects;
 	}
-
-	public void setLendingObjects(List<LendingObject> lendingObjects) {
-		this.lendingObjects = lendingObjects;
+	
+	public void addLendingObject(LendingObject lendingObject) {
+		this.lendingObjects.add(lendingObject);
+		lendingObject.setObjectInformation(this);
+	}
+	
+	public void removeLendingObject(LendingObject lendingObject) {
+		lendingObject.setObjectInformation(null);
+		this.lendingObjects.remove(lendingObject);
 	}
 
 	public List<Publisher> getPublishers() {

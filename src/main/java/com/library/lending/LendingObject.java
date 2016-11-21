@@ -31,9 +31,9 @@ public class LendingObject {
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="OBJECT_INFORMATION_ID")
-	private ObjectInformation object;
+	private ObjectInformation objectInformation;
 	
-	@OneToMany(mappedBy="lendingObject", fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="lendingObject", fetch=FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<LendingInformation> lendingInfo = new ArrayList<>();
 	
 	@Id
@@ -42,7 +42,7 @@ public class LendingObject {
 	private long id;
 	
 	public LendingObject(ObjectInformation objectInformation) {
-		this.object = objectInformation;
+		this.objectInformation = objectInformation;
 	}
 
 	public long getId() {
@@ -61,23 +61,27 @@ public class LendingObject {
 		this.librarys = librarys;
 	}
 
-	public ObjectInformation getObject() {
-		return object;
+	public ObjectInformation getObjectInformation() {
+		return objectInformation;
 	}
 
-	public void setObject(ObjectInformation object) {
-		this.object = object;
-	}
-
-	public List<LendingInformation> getLendingInfo() {
-		return lendingInfo;
-	}
-
-	public void setLendingInfo(List<LendingInformation> lendingInfo) {
-		this.lendingInfo = lendingInfo;
+	public void setObjectInformation(ObjectInformation object) {
+		this.objectInformation = object;
 	}
 	
+	public List<LendingInformation> getLendingInformation() {
+		return this.lendingInfo;
+	}
+
+	public void addLendingInformation(LendingInformation lendingInformation) {
+		this.lendingInfo.add(lendingInformation);
+		lendingInformation.setLendingObject(this);
+	}
 	
+	public void removeLendingInformation(LendingInformation lendingInformation) {
+		lendingInformation.setLendingObject(null);
+		this.lendingInfo.remove(lendingInformation);
+	}
 	
 	
 
