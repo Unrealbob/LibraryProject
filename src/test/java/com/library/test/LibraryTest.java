@@ -38,7 +38,8 @@ import com.library.people.Sexuality;
 public class LibraryTest {
 	//	private static final String PERSISTENCE_UNIT_NAME = "derby-embedded-inmemory";
 
-	private static final String PERSISTENCE_UNIT_NAME = "derby-network";
+	//private static final String PERSISTENCE_UNIT_NAME = "derby-network";
+	private static final String PERSISTENCE_UNIT_NAME = "h2-mem";
 
 	private static EntityManagerFactory factory;
 

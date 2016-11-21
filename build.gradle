@@ -45,4 +45,5 @@ dependencies {
 	//runtime 'org.apache.logging.log4j:log4j-slf4j-impl:+'
     
     //Use H2 as database 
+    compile group: 'com.h2database', name: 'h2', version: '1.4.193'
 }
