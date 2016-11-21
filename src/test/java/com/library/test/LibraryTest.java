@@ -57,12 +57,8 @@ public class LibraryTest {
 		CD cd = new CD();
 		cd.setName("TestCD");
 		int titlesCount = 13;
-		List<CD> cds = new ArrayList<>();
-		cds.add(cd);
-		List<Artist> artists = new ArrayList<>();
 		Artist artist = new Artist();
 		artist.setName("TestArtist");
-		artists.add(artist);
 		List<Title> titles = new ArrayList<>();
 		
 		EntityManager entityManager = factory.createEntityManager();
@@ -77,15 +73,13 @@ public class LibraryTest {
 					Title title = new Title();
 					title.setName("Title" + i);
 					title.setDuration(123);		
-					title.setCds(cds);
-					title.setArtists(artists);
+					cd.addTitle(title);
+					title.addArtist(artist);
 					
 					titles.add(title);
 					
 					entityManager.persist(title);
 				}
-				
-				cd.setTitles(titles);
 				
 				entityManager.persist(artist);
 				entityManager.persist(cd);
@@ -138,7 +132,7 @@ public class LibraryTest {
 			for(ObjectInformation obj : movies){
 				System.out.println(obj.getName());
 			}
-			
+			//TODO: This is not a test - the output has to be validated or this part removed
 			
 		} finally{
 			entityManager.close();
@@ -151,8 +145,7 @@ public class LibraryTest {
 		customer.setFirstName("TestCustomer");
 		customer.setSex(Sexuality.MALE);
 		Pass pass = new Pass();
-		pass.setCustomer(customer);
-		customer.setPass(pass);
+		customer.addPass(pass);
 		EntityManager entityManager = factory.createEntityManager();
 		
 		try{
@@ -185,22 +178,16 @@ public class LibraryTest {
 		customer.setStatus(CustomerStatus.ACTIVE);
 		
 		Pass pass = new Pass();
-		pass.setCustomer(customer);
 		pass.setValidDate(new GregorianCalendar(2017, 02, 10).getTime());	
-		customer.setPass(pass);
+		customer.addPass(pass);
 		
 		Book book = new Book();
 		book.setName("TestBook");
 		
 		LendingInformation lendingInfo = new LendingInformation();
-		lendingInfo.setCustomer(customer);
+		customer.addLendingInformation(lendingInfo);
 		LendingObject lendingObj = new LendingObject(book);
-		lendingInfo.setLendingObject(lendingObj);
-		
-		List<LendingInformation> lendingInfoList = new ArrayList<>();
-		lendingInfoList.add(lendingInfo);
-		
-		customer.setLendingInfos(lendingInfoList);
+		lendingObj.addLendingInformation(lendingInfo);
 		
 		EntityManager entityManager = factory.createEntityManager();
 		
@@ -268,7 +255,7 @@ public class LibraryTest {
 		Library lib = new Library();
 		Book book = new Book();
 		LendingObject lendingBook = new LendingObject(book);
-		lib.getLendingObjects().add(lendingBook);
+		lib.addLendingObject(lendingBook);
 		
 		EntityManager entityManager = factory.createEntityManager();
 		
@@ -318,7 +305,7 @@ public class LibraryTest {
 		Library lib = new Library();
 		Book book = new Book();
 		LendingObject lendingBook = new LendingObject(book);
-		lib.getLendingObjects().add(lendingBook);
+		lib.addLendingObject(lendingBook);
 		
 		EntityManager entityManager = factory.createEntityManager();
 		
@@ -362,10 +349,9 @@ public class LibraryTest {
 	public void testDeleteCustomer(){
 		Pass pass = new Pass();
 		Customer cust = new Customer();
-		pass.setCustomer(cust);
-		cust.setPass(pass);
+		cust.addPass(pass);
 		LendingInformation info = new LendingInformation();
-		info.setCustomer(cust);
+		cust.addLendingInformation(info);
 		
 		EntityManager entityManager = factory.createEntityManager();
 		
@@ -410,8 +396,7 @@ public class LibraryTest {
 		Employee emp = new Employee();
 		emp.setFirstName("TestEmployee");
 		Library lib = new Library();
-		lib.getEmployees().add(emp);
-		emp.setLibrary(lib);
+		lib.addEmployee(emp);
 		EntityManager entityManager = factory.createEntityManager();
 		
 		try{
@@ -456,14 +441,12 @@ public class LibraryTest {
 		Employee emp = new Employee();
 		Customer cust = new Customer();
 		Pass pass = new Pass();
-		cust.setPass(pass);
-		pass.setCustomer(cust);
+		cust.addPass(pass);
 		Book book = new Book();
 		LendingObject lenobj = new LendingObject(book);
 		LendingInformation leninfo = new LendingInformation();
-		leninfo.setCustomer(cust);
+		lenobj.addLendingInformation(leninfo);
 		leninfo.setEmployee(emp);
-		leninfo.setLendingObject(lenobj);
 		
 		
 		EntityManager entityManager = factory.createEntityManager();

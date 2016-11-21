@@ -108,7 +108,7 @@ public class DslTest {
 		@Override
 		public List<LendingInformation> get(LendingObject input) {
 			// TODO Auto-generated method stub
-			return input.getLendingInfo();
+			return input.getLendingInformation();
 		}	
 	}
 	private static class LendingInformationToLendingObject extends AbstractToOne<LendingInformation, LendingObject> {
@@ -169,7 +169,7 @@ public class DslTest {
 		input.getLendingObjects().add(lendingObjectList);
 		LendingInformation info = new LendingInformation();
 		info.setStatus(ObjectStatus.NEW);
-		lendingObjectList.getLendingInfo().add(info);
+		lendingObjectList.addLendingInformation(info);
 		
 		
 		List<LendingInformation> lendingInfos = from(ObjectInformation.class).join(lendingObjects()).join(lendingInformations()).get(input);
