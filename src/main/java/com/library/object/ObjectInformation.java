@@ -24,7 +24,7 @@ import com.library.people.Publisher;
 @Inheritance(strategy=InheritanceType.JOINED)
 public abstract class ObjectInformation {
 	
-	@OneToMany(mappedBy="object", fetch=FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy="objectInformation", fetch=FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<LendingObject> lendingObjects = new ArrayList<LendingObject>();
 	
 	@ManyToMany(targetEntity = Publisher.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE})

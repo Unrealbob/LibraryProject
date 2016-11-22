@@ -377,7 +377,6 @@ public class LibraryTest {
 				LendingInformation testInfo = entityManager.find(LendingInformation.class, info.getId());
 				assertEquals(info, testInfo);
 				
-				//All physical objects should be deleted if a library gets deleted
 				Customer testCust2 = entityManager.find(Customer.class, cust.getId());
 				assertEquals(null, testCust2);
 				

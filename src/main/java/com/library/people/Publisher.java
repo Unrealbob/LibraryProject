@@ -18,7 +18,7 @@ import com.library.object.ObjectInformation;
 @Entity(name="PUBLISHER")
 public class Publisher {
 	
-	@ManyToMany(targetEntity = Publisher.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToMany(targetEntity = ObjectInformation.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(
 			name="OBJECTINFO_PUBLISHER",
 			joinColumns=@JoinColumn(name="PUBLISHER_ID", referencedColumnName="PUBLISHER_ID"),
