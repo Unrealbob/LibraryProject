@@ -403,9 +403,7 @@ public class LibraryTest {
 			transaction.begin();
 
 			try{
-				entityManager.persist(lib);
-				entityManager.persist(emp);
-				
+				entityManager.persist(lib);				
 				
 				transaction.commit();
 				transaction.begin();
@@ -415,7 +413,7 @@ public class LibraryTest {
 				Library testLibrary = entityManager.find(Library.class, lib.getId());
 				assertEquals(lib, testLibrary);
 				
-				entityManager.remove(emp);
+				entityManager.remove(testEmp);
 				transaction.commit();
 				//Library should not be deleted
 				Library testLib2 = entityManager.find(Library.class, lib.getId());

@@ -27,12 +27,10 @@ import com.library.people.Employee;
 public class Library {
 	
 	//This was ManyToMany in the model, but one physical book can only be at one physical location
-	@OneToMany(targetEntity = LendingObject.class, cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "LENDING_OBJECT_ID")
+	@OneToMany(targetEntity = LendingObject.class, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "library")
 	List<LendingObject> lendingObjects = new ArrayList<>();
 	
-	@OneToMany(targetEntity= Employee.class, cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name="EMPLOYEE_ID")
+	@OneToMany(targetEntity= Employee.class, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "library")
 	List<Employee> employees = new ArrayList<>();
 	
 	@Id

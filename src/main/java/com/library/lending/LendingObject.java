@@ -22,7 +22,7 @@ import com.library.object.ObjectInformation;
 @Entity(name="LENDING_OBJECT")
 public class LendingObject {
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "LIBRARY_ID")
 	private Library library;
 	
