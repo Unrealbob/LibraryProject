@@ -26,8 +26,8 @@ public class Employee extends Human {
 	@Column(name = "SALARY")
 	private long salary;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "LIBRARY_ID")
+	@ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
+	@JoinColumn(name = "LIBRARY_ID", referencedColumnName = "LIBRARY_ID")
 	private Library library;
 
 	//Don't remove past lendings if an employee is removed

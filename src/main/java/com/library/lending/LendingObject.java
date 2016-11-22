@@ -40,6 +40,7 @@ public class LendingObject {
 	
 	public LendingObject(ObjectInformation objectInformation) {
 		this.objectInformation = objectInformation;
+		objectInformation.addLendingObject(this);
 	}
 
 	public long getId() {

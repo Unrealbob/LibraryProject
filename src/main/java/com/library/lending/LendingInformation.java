@@ -27,12 +27,12 @@ public class LendingInformation {
 	private LendingObject lendingObject;
 	
 	//TODO: Check if this entry persists if a customer gets deleted - it should just be detached
-	@ManyToOne(fetch=FetchType.LAZY, cascade={ CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
+	@ManyToOne(fetch=FetchType.LAZY, optional = true, cascade={ CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
 	@JoinColumn(name="CUSTOMER_ID")
 	private Customer customer;
 	
 	//TODO: Check if this entry persists if an employee gets deleted - it should just be detached
-	@ManyToOne(fetch=FetchType.LAZY, cascade={ CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
+	@ManyToOne(fetch=FetchType.LAZY, optional = true, cascade={ CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
 	@JoinColumn(name="EMPLOYEE_ID")
 	private Employee employee;
 	

@@ -413,14 +413,17 @@ public class LibraryTest {
 				Library testLibrary = entityManager.find(Library.class, lib.getId());
 				assertEquals(lib, testLibrary);
 				
-				entityManager.remove(testEmp);
+				//Remove employee - he should be deleted
+				emp.getLibrary().removeEmployee(emp);
+				//entityManager.remove(testEmp);
 				transaction.commit();
+				transaction.begin();
 				//Library should not be deleted
 				Library testLib2 = entityManager.find(Library.class, lib.getId());
 				assertEquals(lib, testLib2);
 				
 				//Employee should be deleted
-				Employee testEmp2 = entityManager.find(Employee.class, emp.getId());
+				Employee testEmp2 = entityManager.find(Employee.class, testEmp.getId());
 				assertEquals(null, testEmp2);
 				
 			} finally{
@@ -435,7 +438,9 @@ public class LibraryTest {
 	
 	@Test
 	public void testDeleteLendingInformation(){
+		Library lib = new Library();
 		Employee emp = new Employee();
+		lib.addEmployee(emp);
 		Customer cust = new Customer();
 		Pass pass = new Pass();
 		cust.addPass(pass);
@@ -453,10 +458,6 @@ public class LibraryTest {
 			transaction.begin();
 
 			try{
-				entityManager.persist(book);
-				entityManager.persist(pass);
-				entityManager.persist(cust);
-				entityManager.persist(emp);
 				entityManager.persist(lenobj);
 				entityManager.persist(leninfo);
 				
