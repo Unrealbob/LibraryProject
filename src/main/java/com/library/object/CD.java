@@ -47,6 +47,9 @@ public class CD extends Media{
 		title.getCds().remove(this);
 	}
 	
-	
+	@Override
+	public String toString() {
+		return "CD " + this.getName();
+	}
 
 }

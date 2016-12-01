@@ -66,4 +66,9 @@ public class Customer extends Human{
 		lendingInformation.setCustomer(null);
 		this.lendingInfos.remove(lendingInformation);
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("Customer %s %s", getFirstName(), getSecondName());
+	}
 }

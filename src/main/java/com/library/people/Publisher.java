@@ -30,11 +30,8 @@ public class Publisher {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
-	@Column(name="FIRST_NAME")
-	private String firstName;
-
-	@Column(name="LAST_NAME")
-	private String lastName;
+	@Column(name="NAME")
+	private String name;
 
 	public List<ObjectInformation> getObjectInfos() {
 		return objectInfos;
@@ -48,22 +45,12 @@ public class Publisher {
 		this.id = id;
 	}
 
-	public String getFirstName() {
-		return firstName;
+	public String getName() {
+		return name;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public void setName(String name) {
+		this.name = name;
 	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-	
-	
 
 }

@@ -22,21 +22,25 @@ import com.library.object.ObjectInformation;
 @Entity(name="LENDING_OBJECT")
 public class LendingObject {
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "LIBRARY_ID")
 	private Library library;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="OBJECT_INFORMATION_ID")
 	private ObjectInformation objectInformation;
 	
-	@OneToMany(mappedBy="lendingObject", fetch=FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy="lendingObject", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<LendingInformation> lendingInfo = new ArrayList<>();
 	
 	@Id
 	@Column(name="LENDING_OBJECT_ID")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
+	
+	private LendingObject() {
+		
+	}
 	
 	public LendingObject(ObjectInformation objectInformation) {
 		this.objectInformation = objectInformation;
@@ -81,6 +85,9 @@ public class LendingObject {
 		this.lendingInfo.remove(lendingInformation);
 	}
 	
-	
+	@Override
+	public String toString() {
+		return String.format("Object %d '%s'", getId(), getObjectInformation().toString());
+	}
 
 }

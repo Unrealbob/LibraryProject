@@ -32,6 +32,11 @@ public class Movie extends Media{
 		this.type = type;
 	}
 	
-	
+
+	@Override
+	public String toString() {
+		return "Movie " + this.getName();
+	}
+
 
 }

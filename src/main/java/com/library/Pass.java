@@ -24,7 +24,7 @@ public class Pass {
 	@Column(name="VALIDITYDATE")
 	private Date validDate;
 	
-	@OneToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="CUSTOMER_ID")
 	private Customer customer;
 	

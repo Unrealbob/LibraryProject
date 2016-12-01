@@ -26,7 +26,7 @@ public class Employee extends Human {
 	@Column(name = "SALARY")
 	private long salary;
 
-	@ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
+	@ManyToOne(optional = false, fetch = FetchType.EAGER, cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
 	@JoinColumn(name = "LIBRARY_ID", referencedColumnName = "LIBRARY_ID")
 	private Library library;
 
@@ -58,12 +58,22 @@ public class Employee extends Human {
 		return lendingInfos;
 	}
 
-	public void setLendingInfos(List<LendingInformation> lendingInfos) {
-		this.lendingInfos = lendingInfos;
+	public void addLendingInformation(LendingInformation lendingInformation) {
+		this.lendingInfos.add(lendingInformation);
+		lendingInformation.setEmployee(this);
+	}
+
+	public void removeLendingInformation(LendingInformation lendingInformation) {
+		lendingInformation.setEmployee(null);
+		this.lendingInfos.remove(lendingInformation);
 	}
 
 	public void setEmployeeId(long employeeId) {
 		this.employeeId = employeeId;
 	}
 
+	@Override
+	public String toString() {
+		return String.format("Employee %s %s", this.getFirstName(), this.getSecondName());
+	}
 }

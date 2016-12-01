@@ -12,6 +12,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,10 +28,10 @@ import com.library.people.Employee;
 public class Library {
 	
 	//This was ManyToMany in the model, but one physical book can only be at one physical location
-	@OneToMany(targetEntity = LendingObject.class, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "library")
+	@OneToMany(targetEntity = LendingObject.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "library")
 	List<LendingObject> lendingObjects = new ArrayList<>();
 	
-	@OneToMany(targetEntity= Employee.class, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "library")
+	@OneToMany(targetEntity= Employee.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "library")
 	List<Employee> employees = new ArrayList<>();
 	
 	@Id

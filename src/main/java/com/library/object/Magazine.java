@@ -17,5 +17,10 @@ public class Magazine extends PrintMedia{
 		this.version = version;
 	}
 	
-	
+
+	@Override
+	public String toString() {
+		return "Magazine " + this.getName();
+	}
+
 }

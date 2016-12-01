@@ -29,6 +29,9 @@ public class Book extends PrintMedia{
 	}
 	
 	
-	
+	@Override
+	public String toString() {
+		return "Book " + this.getName();
+	}
 
 }
