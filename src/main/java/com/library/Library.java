@@ -31,7 +31,7 @@ public class Library {
 	@OneToMany(targetEntity = LendingObject.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "library")
 	List<LendingObject> lendingObjects = new ArrayList<>();
 	
-	@OneToMany(targetEntity= Employee.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "library")
+	@OneToMany(targetEntity= Employee.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "library")
 	List<Employee> employees = new ArrayList<>();
 	
 	@Id
